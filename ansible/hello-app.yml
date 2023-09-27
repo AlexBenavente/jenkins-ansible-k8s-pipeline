@@ -1,0 +1,24 @@
+---
+- hosts: ansible
+  user: ansible-admin
+
+  tasks:
+    - name: Creating Docker image
+      ansible.builtin.command:
+        cmd: 'docker build -t hello:latest .'
+      args:
+        chdir: /opt/docker
+      register: my_output
+      changed_when: my_output.stdout != 0
+
+    - name: Creating tag to push image to DockerHub
+      ansible.builtin.command:
+        cmd: 'docker tag hello:latest abenavente1/hello:latest'
+      register: my_output
+      changed_when: my_output.stdout != 0
+
+    - name: Pushing Docker image onto DockerHub
+      ansible.builtin.command:
+        cmd: 'docker push abenavente1/hello:latest'
+      register: my_output
+      changed_when: my_output.stdout != 0

@@ -1,0 +1,21 @@
+---
+- hosts: kubernetes
+
+  tasks:
+    - name: Deploying app on Kubernetes
+      ansible.builtin.command:
+        cmd: 'kubectl apply -f hello-app-deployment.yaml'
+      register: my_output
+      changed_when: my_output.stdout != 0
+
+    - name: Creating service for app
+      ansible.builtin.command:
+        cmd: 'kubectl apply -f hello-app-service.yaml'
+      register: my_output
+      changed_when: my_output.stdout != 0
+
+    - name: Updating deployment with new pods if image updated in DockerHub
+      ansible.builtin.command:
+        cmd: 'kubectl rollout restart deployment.apps/ab-hello-app'
+      register: my_output
+      changed_when: my_output.stdout != 0
