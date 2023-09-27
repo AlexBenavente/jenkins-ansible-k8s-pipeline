@@ -49,7 +49,7 @@ For my automated CI/CD workflow, I am using a Jenkins pipeline to build a Java S
 
 ![Jenkins Pipeline](https://github.com/AlexBenavente/Images/blob/main/jenkins-pipeline.png)
 
-### Terraform AWS
+### AWS Terraform
 
 First I created the cloud infrastructure in AWS using Terraform as Infrastructure as Code:
 
@@ -77,9 +77,12 @@ On the Ansible EC2 server, I configure Ansible and connect to my DockerHub image
 
 In my Jenkins project configuration, I reference a Java Spring Boot web application source repository in my GitHub.
 
-The Jenkins CI/CD pipeline uses Apache Maven to build my application code into a JAR artifact and send it to the ansible server. Once the build artifact is on the Ansible server, the pipeline runs an Ansible playbook that builds a Docker container image from the JAR artifact and uploads the container image to my Dockerhub container repository.
+The Jenkins CI/CD pipeline uses Apache Maven to build my application code into a JAR artifact and send it to the ansible server.
 
 ![Jenkins Ansible Files](https://github.com/AlexBenavente/Images/blob/main/jenkins-ansible-files.png)
+
+Once the build artifact is on the Ansible server, the pipeline runs an Ansible playbook that builds a Docker container image from the JAR artifact and uploads the container image to my Dockerhub container repository.
+
 ![Jenkins DockerHub](https://github.com/AlexBenavente/Images/blob/main/jenkins-dockerhub.png)
 
 Then another Ansible playbook runs a Kubernetes deployment to update my Kubernetes cluster with the new container image.
@@ -88,9 +91,12 @@ Then when we open the web browser to our exposed Kubernetes service load balance
 
 ![Jenkins v1](https://github.com/AlexBenavente/Images/blob/main/jenkins-v1.png)
 
-Then if we update our application code and run the Jenkins CI/CD build pipeline again, when we reload the web browser, we can see that the web application was updated and is now running the new version on the Kubernetes cluster, thanks to the Jenkins CI/CD pipeline.
+Then after we update our application code we can run the Jenkins CI/CD build pipeline again.
 
 ![Jenkins b2](https://github.com/AlexBenavente/Images/blob/main/jenkins-build2.png)
+
+Then when we reload the web browser, we can see that the web application was updated and is now running the new version on the Kubernetes cluster, thanks to the Jenkins CI/CD pipeline.
+
 ![Jenkins v2](https://github.com/AlexBenavente/Images/blob/main/jenkins-v2.png)
 
 <!-- MARKDOWN LINKS & IMAGES -->
